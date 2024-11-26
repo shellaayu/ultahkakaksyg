@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selamat Ulang Tahun</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      background-color: #87CEEB; /* Langit biru */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      text-align: center;
+      color: #000;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 1rem;
+      max-width: 90%;
+      line-height: 1.6;
+      margin: 0 auto 10px;
+    }
+
+    .nav-buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Animasi */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes rotateIn {
+      from {
+        opacity: 0;
+        transform: rotate(-180deg);
+      }
+      to {
+        opacity: 1;
+        transform: rotate(0deg);
+      }
+    }
+
+    .slide:nth-child(1).active {
+      animation: fadeIn 1.5s forwards;
+    }
+
+    .slide:nth-child(2).active {
+      animation: slideInLeft 1.5s forwards;
+    }
+
+    .slide:nth-child(3).active {
+      animation: slideInRight 1.5s forwards;
+    }
+
+    .slide:nth-child(4).active {
+      animation: zoomIn 1.5s forwards;
+    }
+
+    .slide:nth-child(5).active {
+      animation: rotateIn 1.5s forwards;
+    }
+
+    /* Responsif untuk handphone */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+
+      button {
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Slide 1 -->
+    <div class="slide active">
+      <h1>Haii Kak!</h1>
+      <p>Ini ulang tahun pertama kamu bareng aku yaa 😁</p>
+      <p>Maaf nggak bisa romantis seperti pacar-pacar kamu sebelumnya.</p>
+      <p>Tapi aku pengen treat kamu dengan cara aku sendiri 😚</p>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+      <h1>Sayang 🩵</h1>
+      <p>Memang aku bukan cinta pertama kamu...</p>
+      <p>Tapi aku mau kok usahain jadi yang terbaik asal sama kakak terus 🩵</p>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+      <h1>Terima Kasih</h1>
+      <p>Pertemuan kemarin memang singkat, tapi sangat bermakna bagi aku.</p>
+      <p>Terima kasih sudah hadir di hidup aku dan ngertiin bocil satu ini 🩵</p>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+      <h1>Doa untuk Kakak</h1>
+      <p>Semoga yang terbaik selalu menyertai kamu.</p>
+      <p>Stay humble, sabar, dan tetap rendah hati ya sayang 🩵</p>
+      <p>Jangan rusak hubungan ini dengan ego ya, jadiin aku yang terakhir 🩵</p>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+      <h1>Sayang...</h1>
+      <p>Aku nggak pernah tahu kalau cinta bisa seindah ini sampai aku bertemu kamu.</p>
+      <p>Kehadiranmu adalah anugerah yang selalu aku syukuri.</p>
+    </div>
+
+    <!-- Tombol Navigasi -->
+    <div class="nav-buttons">
+      <button id="prev">Sebelumnya</button>
+      <button id="next">Berikutnya</button>
+    </div>
+  </div>
+
+  <script>
+    // Ambil semua elemen slide
+    const slides = document.querySelectorAll(".slide");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    let currentSlide = 0;
+
+    // Fungsi untuk menampilkan slide sesuai indeks
+    function showSlide(index) {
+      // Pastikan indeks berada dalam batas
+      if (index < 0) {
+        currentSlide = slides.length - 1; // Jika mundur melewati awal, kembali ke slide terakhir
+      } else if (index >= slides.length) {
+        currentSlide = 0; // Jika maju melewati akhir, kembali ke slide pertama
+      } else {
+        currentSlide = index;
+      }
+
+      // Sembunyikan semua slide dan tampilkan slide aktif
+      slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        if (i === currentSlide) {
+          slide.classList.add("active");
+        }
+      });
+    }
+
+    // Event Listener untuk tombol "Sebelumnya"
+    prevBtn.addEventListener("click", () => {
+      showSlide(currentSlide - 1);
+    });
+
+    // Event Listener untuk tombol "Berikutnya"
+    nextBtn.addEventListener("click", () => {
+      showSlide(currentSlide + 1);
+    });
+  </script>
+</body>
+</html>
